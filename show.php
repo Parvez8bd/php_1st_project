@@ -1,12 +1,12 @@
 <?php
+include('function.php');
+$objAdmin = new firstApp();
 if (isset($_POST['submit'])) {
-     $name = $_POST['name'];
-     $email = $_POST['email'];
-     $phone = $_POST['phone'];
-     $img_name = $_FILES['img']['name'];
-     $tmp_name = $_FILES['img']['tmp_name'];
-     move_uploaded_file($tmp_name,"img/".$img_name);
+    $returnmess = $objAdmin->create($_POST);
+    
 }
+    $data =$objAdmin->show();
+    
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,20 +24,38 @@ if (isset($_POST['submit'])) {
 
 <div class="container">
     <div class="row">
+        
         <h1>User info:</h1>
-            <div class="mb-3">
-                <label for="name" class="form-label">Name : <?php echo(isset($name) ?  $name : '')  ?> </label>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address : <?php echo(isset($email) ?  $email : '')  ?></label>
-            </div>
-            <div class="mb-3">
-                <label for="number" class="form-label">Phone: <?php echo(isset($phone) ?  $phone : '')  ?></label>
-            </div>
-            <div class="mb-3">
-                <label for="number" class="form-label">Photo: </label>
-                <img src="img/<?php echo(isset($img_name) ?  $img_name : '')  ?>" alt="">
-            </div>
+        <h4><?php echo $returnmess ?? ''?></h4>
+        <table class="table table-striped mt-5">
+            <thead>
+                <tr class="table-success">
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Photo</th>
+                    <th scope="col" class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach (mysqli_fetch_assoc($data) as  $value) {
+                    # code...
+                } ?>
+                <tr>
+                    <th scope="row">01</th>
+                    <td><?php echo($name ?? '')  ?> </td>
+                    <td><?php echo($email ?? '')  ?></td>
+                    <td><?php echo($phone ?? '')  ?></td>
+                    <td><img class="" src="img/<?php echo($img_name ?? '')  ?>" alt="" width="80px"></td>
+                    <td class="text-end">
+                        <button class="btn btn-primary">Show</button>
+                        <button class="btn btn-warning">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

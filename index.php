@@ -1,3 +1,7 @@
+<?php
+    include('function.php');
+    $objAdmin = new firstApp();
+?>
 <!doctype html>
 <html lang="en">
 <head>
